@@ -1,6 +1,8 @@
 var app = {
     gameOver : false,
     numOfCards: 6,
+    countDownPlaying : null,
+    blinkId:null,
     preSelectedColor:"",
     mode:"hard",
     cards:[ ],
@@ -17,6 +19,7 @@ var app = {
         this.messageEl = document.getElementById('message');
         this.bodyEl = document.body;
         this.countdownDisplayEl = document.querySelector("#countdown");
+        
     },
     setCards:function(){
       this.cards = [];
@@ -47,22 +50,27 @@ var app = {
                 case 'easy':
                     this.numOfCards = 3;
                     this.getMode(targetElText);
+                    this.deactivateCountDown();
                     break;
                 case 'hard':
                     this.numOfCards = 6;
                     this.getMode(targetElText);
+                    this.deactivateCountDown();
                     break;
-                case 'nightbare':
+                case 'nightmare':
                     this.numOfCards = 6;
                     this.getMode(targetElText);
+                    this.activateCountDown();
                     break;
                 case 'crazy':
                     this.numOfCards = 15;
                     this.getMode(targetElText);
+                    this.deactivateCountDown();
                     break;
                 default: 
                     this.numOfCards = 6;
                     this.getMode('hard');
+                    this.deactivateCountDown();
             }
             this.reset();
         }.bind(this));
@@ -84,22 +92,38 @@ var app = {
         this.preSelectedColor = this.pickColor();
         this.preSelectedColorEl.textContent = this.preSelectedColor;
     },
-    renderCountDown:function (){
-        var second = 5;
-        var countDown = function (){
-             if(second > 0){
-                this.messageEl.textContent = `WHAT'S THE COLOR? ${second}`;
-                second -= 1;
-             console.log('this',this);
-             } else {
-                clearInterval(interval);
-                this.messageEl.textContent = 'Timeout!';
-             }
-        };
-      
-        var interval = setInterval(countDown.bind(this), 1000);
-
-
+    activateCountDown:function (){
+        this.countDown(true);
+    },
+    deactivateCountDown:function (){
+        this.countDown(false);
+    },
+  
+    blink:function (){
+       this.bodyEl.style.backgroundColor = '#232323';
+       clearInterval(this.blinkId);
+    },
+    countDown:function (isON){
+        var second = 4;
+        if(isON === true){
+            this.countdownDisplayEl.textContent = ` ${second + 1}`;
+            this.countDownPlaying = setInterval(function(){
+              if(second > 0){
+                  this.countdownDisplayEl.textContent = ` ${second}`;
+                  second -= 1;
+                  this.bodyEl.style.backgroundColor = '#FFF';
+                  this.blinkId = setInterval(this.blink.bind(this), 50);
+               } else {
+                  clearInterval(this.countDownPlaying);
+                  this.countdownDisplayEl.textContent ="";
+                  this.messageEl.textContent = 'Timeout!';
+               }
+             }.bind(this),1000);    
+        } else {
+          clearInterval(this.countDownPlaying);
+          this.countdownDisplayEl.textContent ="";
+          this.messageEl.textContent = "WHAT'S THE COLOR?";
+        }
     },
     reset:function (){
        this.render();
@@ -129,7 +153,6 @@ var app = {
           card.style.opacity = 1;
           card.style.background = '#FFF';
       });
-      
     },
     checkSelectedColor:function (){
       this.cardContainerEl.addEventListener('click', function (event){
@@ -144,14 +167,10 @@ var app = {
             clickedCard.style.opacity = 0;
             this.renderGameState('&nbsp');
             setTimeout(function(){
-           
                 this.renderGameState('Try Again');
             }.bind(this),100);
           
           }
-          
-         
-            
       }.bind(this));
     },
 }
