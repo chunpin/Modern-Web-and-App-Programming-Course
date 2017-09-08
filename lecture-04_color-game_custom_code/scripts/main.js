@@ -5,12 +5,15 @@ var app = {
     blinkId:null,
     preSelectedColor:"",
     mode:"hard",
-    cards:[ ],
+    cards:[],
     init:function (){
        this.casheDom();
        this.getNumOfCards();
        this.render();
        this.checkSelectedColor();
+       this.resetButtonEl.addEventListener('click',function (){
+            this.reset();
+       }.bind(this));
     },
     casheDom:function (){
         this.cardContainerEl = document.getElementById('card-container');
@@ -19,7 +22,7 @@ var app = {
         this.messageEl = document.getElementById('message');
         this.bodyEl = document.body;
         this.countdownDisplayEl = document.querySelector("#countdown");
-        
+        this.resetButtonEl = document.getElementById('reset');
     },
     setCards:function(){
       this.cards = [];
@@ -31,48 +34,49 @@ var app = {
          })
       }
     },
-    // end: function (){
-    //     countdownDisplay.textContent = '';
-    //     resetButton.style.opacity = 1;
-    //     this.countdownDisplayEl.textContent = "Play Again"
-    //     changeColors("#FFF");
-    //     body.style.backgroundColor = pickedColor;
-    //     gameOver = true;
-    // },
-    getMode:function (mode){
+    setMode:function (mode){
       this.mode = mode;
     },  
     getNumOfCards:function (){
         this.navbarEl.addEventListener('click', function (event){
+             var navbarItems = this.navbarEl.querySelectorAll('li a');
+             navbarItems.forEach(function(item){
+                item.classList.remove('selected');
+             });
              var targetEl = event.target;
+             if(targetEl.nodeName.toLowerCase() === 'a'){
+                  targetEl.classList.add('selected');
+             }
+          
              var targetElText = targetEl.textContent.toLowerCase();
+          
              switch (targetElText) {
                 case 'easy':
                     this.numOfCards = 3;
-                    this.getMode(targetElText);
+                    this.setMode(targetElText);
+                    this.resetBackgroundColor();
                     this.deactivateCountDown();
                     break;
                 case 'hard':
                     this.numOfCards = 6;
-                    this.getMode(targetElText);
+                    this.setMode(targetElText);
+                    this.resetBackgroundColor();
                     this.deactivateCountDown();
                     break;
                 case 'nightmare':
                     this.numOfCards = 6;
-                    this.getMode(targetElText);
+                    this.setMode(targetElText);
+                    this.resetBackgroundColor();
                     this.activateCountDown();
-                    break;
-                case 'crazy':
-                    this.numOfCards = 15;
-                    this.getMode(targetElText);
-                    this.deactivateCountDown();
                     break;
                 default: 
                     this.numOfCards = 6;
-                    this.getMode('hard');
+                    this.setMode('hard');
                     this.deactivateCountDown();
             }
-            this.reset();
+            if(targetEl.nodeName.toLowerCase() === 'a'){
+                this.reset();
+            }
         }.bind(this));
     },
     render:function (){
@@ -106,6 +110,7 @@ var app = {
     countDown:function (isON){
         var second = 4;
         if(isON === true){
+            clearInterval(this.countDownPlaying);
             this.countdownDisplayEl.textContent = ` ${second + 1}`;
             this.countDownPlaying = setInterval(function(){
               if(second > 0){
@@ -119,14 +124,20 @@ var app = {
                   this.messageEl.textContent = 'Timeout!';
                }
              }.bind(this),1000);    
-        } else {
+        } else if (isON === false) {
           clearInterval(this.countDownPlaying);
           this.countdownDisplayEl.textContent ="";
           this.messageEl.textContent = "WHAT'S THE COLOR?";
         }
     },
     reset:function (){
+       this.resetButtonEl.textContent = 'New Color';
+       this.bodyEl.style.backgroundColor = '#232323';
+       this.messageEl.textContent = "WHAT'S THE COLOR?";
        this.render();
+       if(this.mode === 'nightmare'){
+         this.activateCountDown();
+       }
     },
     randomColor: function (){
       //pick a "red" from 0 - 255
@@ -140,12 +151,12 @@ var app = {
     renderGameState:function (message){
         this.messageEl.innerHTML = message;
     },
-    renderBackgroundColor:function (color){
-        this.bodyEl.style.backgroundColor = color;
-    },
     pickColor: function (){
       var randomNumber = Math.floor(Math.random() * this.cards.length);
       return this.cards[randomNumber].color;
+    },
+    resetBackgroundColor:function (){
+         this.bodyEl.style.backgroundColor = '#232323';
     },
     setAllCardsToWhite:function (){
       var cards = this.cardContainerEl.childNodes;
@@ -154,18 +165,27 @@ var app = {
           card.style.background = '#FFF';
       });
     },
+    end:function (){
+         this.countdownDisplayEl.textContent = '';
+         this.resetButtonEl.style.opacity = 1;
+         this.resetButtonEl.textContent = "Play Again"
+         this.setAllCardsToWhite();
+         this.bodyEl.style.backgroundColor = this.preSelectedColor;
+         this.deactivateCountDown();
+         gameOver = true;
+    },
     checkSelectedColor:function (){
       this.cardContainerEl.addEventListener('click', function (event){
           var clickedCard = event.target;
           var clickedColor = clickedCard.style.backgroundColor;
           var preSelectedColor = this.preSelectedColor;
           if(clickedColor === preSelectedColor) {
-            this.renderGameState('Correct!');
-            this.renderBackgroundColor(clickedColor);
             this.setAllCardsToWhite();
+            this.end();
+            this.renderGameState('Correct!');
           } else{
             clickedCard.style.opacity = 0;
-            this.renderGameState('&nbsp');
+            // this.renderGameState('&nbsp');
             setTimeout(function(){
                 this.renderGameState('Try Again');
             }.bind(this),100);
@@ -174,7 +194,5 @@ var app = {
       }.bind(this));
     },
 }
-
-
 
 app.init();
