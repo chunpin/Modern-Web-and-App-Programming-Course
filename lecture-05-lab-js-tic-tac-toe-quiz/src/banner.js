@@ -10,7 +10,7 @@ export default class Banner extends Component {
     }
 
     constructor(root) {
-        super(root);
+        super(root);  // this.root , banner div object
         this.roles = {};
 
         const els = root.querySelectorAll(Role.getRootClass());
@@ -30,3 +30,6 @@ export default class Banner extends Component {
         this.roles[x].setScore();
     }
 }
+
+
+
