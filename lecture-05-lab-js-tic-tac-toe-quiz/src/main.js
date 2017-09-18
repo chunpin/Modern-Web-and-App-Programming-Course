@@ -11,7 +11,7 @@ export default class Main extends Component {
     }
 
     constructor(root) {
-        super(root);
+        super(root);  // this.root = document.querySelector('body');  , *see last chunks of window.onload fn inside of this module *. 
 
         this.whichTurn = "O";
         this.banner = new Banner(root.querySelector('.banner'));

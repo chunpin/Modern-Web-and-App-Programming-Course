@@ -13,7 +13,7 @@ export default class Banner extends Component {
         super(root);
         this.roles = {};
 
-        const els = root.querySelectorAll(Role.getRootClass());
+        const els = root.querySelectorAll(Role.getRootClass());   //return '.role';
         this.roles['O'] =  new Role(els[0]);
         this.roles['X'] =  new Role(els[1]);
 
