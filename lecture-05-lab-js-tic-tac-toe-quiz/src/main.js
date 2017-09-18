@@ -11,15 +11,21 @@ export default class Main extends Component {
     }
 
     constructor(root) {
+<<<<<<< HEAD
         super(root);  // this.root = document.querySelector('body');  , *see last chunks of window.onload fn inside of this module *. 
+||||||| merged common ancestors
+        super(root);
+=======
+        super(root); // this.root  // body object
+>>>>>>> 62723d49a622df5764a66ce4337a8d82aae71a05
 
         this.whichTurn = "O";
-        this.banner = new Banner(root.querySelector('.banner'));
-        this.grid = new Grid(root.querySelector('.grid'));
+        this.banner = new Banner(root.querySelector('.banner')); // banner object
+        this.grid = new Grid(root.querySelector('.grid')); // grid object
         this.grid.on('click', this.handleCellClick.bind(this));
         this.grid.on('finish', this.handleFinishGame.bind(this));
 
-        this.reset = new Reset(root.querySelector('.reset'));
+        this.reset = new Reset(root.querySelector('.reset')); // reset object
         this.reset.on('click', this.handleRestClick.bind(this));
 
         this.grid.setTurn(this.whichTurn);
