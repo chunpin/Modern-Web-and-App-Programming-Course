@@ -11,3 +11,9 @@
     margin-top: 0.25rem;
     margin-right: 0.25rem;
 }
+
+
+.dropdown-menu[aria-hidden="false"]{
+
+	display:block;
+}
