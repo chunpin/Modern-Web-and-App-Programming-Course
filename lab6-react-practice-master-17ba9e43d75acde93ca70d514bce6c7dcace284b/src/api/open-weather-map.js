@@ -3,6 +3,7 @@ import axios from 'axios';
 // TODO replace the key with yours
 const key = '36978c6550efee0e27e50850cc57adda';
 const baseUrl = `http://api.openweathermap.org/data/2.5/weather?appid=${key}`;
+const forcaseBaseUrl =`http://api.openweathermap.org/data/2.5/forecast?appid=${key}`;
 
 export function getWeatherGroup(code) {
     let group = 'na';
@@ -63,6 +64,8 @@ export function cancelWeather() {
 
 export function getForecast(city, unit) {
     // TODO
+    var url = `${forcaseBaseUrl}&q=${encodeURIComponent(city)}&units=${unit}`;
+    console.log(`Making forecast request to: ${url}`);
 }
 
 export function cancelForecast() {

@@ -16,6 +16,13 @@ export default class Forecast extends React.Component {
         // TODO
     }
 
+
+    componentDidMount() {
+        this.getForecast('Hsinchu', 'metric');
+    }
+
+
+
     render() {
         return (
             <div className={`forecast weather-bg ${this.state.group}`}>
@@ -24,5 +31,9 @@ export default class Forecast extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    getForecast(city,unit){
+        getForecast(city, unit);
     }
 }

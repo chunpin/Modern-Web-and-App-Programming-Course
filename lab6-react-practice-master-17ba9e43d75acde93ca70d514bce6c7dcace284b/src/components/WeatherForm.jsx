@@ -25,7 +25,6 @@ export default class WeatherForm extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.inputEl = null;
         this.state = {
             inputValue: props.city,
