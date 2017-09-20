@@ -62,10 +62,24 @@ export function cancelWeather() {
     weatherSource.cancel('Request canceled');
 }
 
+
+let forecastSource = axios.CancelToken.source();
+
 export function getForecast(city, unit) {
     // TODO
     var url = `${forcaseBaseUrl}&q=${encodeURIComponent(city)}&units=${unit}`;
     console.log(`Making forecast request to: ${url}`);
+
+    return axios.get(url, {cancelToken: forecastSource.token}).then(function (res){
+        if(res.data.code && res.data.message){
+            throw new Error(res.data.message);
+        } else {
+            return {
+                city:capitalize(city),
+
+            }
+        }
+    })
 }
 
 export function cancelForecast() {
