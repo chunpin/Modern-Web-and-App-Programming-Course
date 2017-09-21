@@ -92,7 +92,7 @@ export default class Today extends React.Component {
             }).catch(err => {
                 console.error('Error getting weather', err);
 
-                this.setState({
+                this.setState({  
                     ...Today.getInitWeatherState(unit),
                     loading: false
                 }, () => this.notifyUnitChange(unit));

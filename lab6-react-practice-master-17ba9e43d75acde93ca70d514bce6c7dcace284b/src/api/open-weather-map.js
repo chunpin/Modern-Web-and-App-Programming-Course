@@ -76,12 +76,19 @@ export function getForecast(city, unit) {
         } else {
             return {
                 city:capitalize(city),
-
+                weather_list:res.data.list, // array
             }
         }
-    })
+    }).catch(function (err){
+        if(axios.isCancel(err)) {
+            console.erro(err.message, err);
+        } else {
+            throw err;
+        }
+    });
 }
 
 export function cancelForecast() {
     // TODO
+    forecastSource.cancel('Request canceled');
 }
