@@ -22,14 +22,14 @@ export default class WeatherDisplay extends React.Component {
             <div className={`weather-display ${this.props.masking
                 ? 'masking'
                 : ''}`}>
-                <img src={`images/w-${this.props.group}.png`}/>
-                <p className='description'>{this.props.description}</p>&nbsp;
-                <h1 className='temp'>
-                    <span className='display-3'>{this.props.temp.toFixed(0)}&ordm;</span>
-                    &nbsp;{(this.props.unit === 'metric')
-                        ? 'C'
-                        : 'F'}
-                </h1>
+               
+                <li>
+                    <div className="forecast-date">forecast-date</div>
+                    <img className="forecast-image" src={`images/w-${this.props.group}.png`}/>
+                    <p className="max-temp">max-temp</p>
+                    <p className="min-temp">min-temp</p>
+                </li>
+
             </div>
         );
     }
