@@ -14,6 +14,7 @@ export default class ForecastDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.populateHtml = this.populateHtml.bind(this);
+        this.getWeatherGroup = this.getWeatherGroup.bind(this);
     }
 
     getWeatherGroup(code) {
