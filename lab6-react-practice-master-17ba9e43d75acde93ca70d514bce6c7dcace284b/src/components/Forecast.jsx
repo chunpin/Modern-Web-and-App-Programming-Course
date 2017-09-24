@@ -9,6 +9,9 @@ import WeatherForm from 'components/WeatherForm.jsx';
 
 import {getForecast} from 'api/open-weather-map.js';
 
+
+import './forecast.css';
+
 export default class Forecast extends React.Component {
 
     static propTypes = {
