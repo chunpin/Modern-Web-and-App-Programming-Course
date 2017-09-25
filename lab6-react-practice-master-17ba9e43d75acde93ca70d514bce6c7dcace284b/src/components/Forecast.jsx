@@ -50,6 +50,12 @@ export default class Forecast extends React.Component {
         this.getForecast('Hsinchu', 'metric');
     }
 
+    componentWillUnmount() {
+        if (this.state.loading) {
+            cancelForecast();
+        }
+    }
+
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.city !== this.props.city || nextProps.unit !== this.props.unit)
