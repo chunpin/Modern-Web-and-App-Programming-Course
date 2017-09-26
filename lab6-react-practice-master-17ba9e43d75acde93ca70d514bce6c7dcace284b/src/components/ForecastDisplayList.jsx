@@ -5,7 +5,6 @@ export default class ForecastDisplayList extends React.Component {
     constructor(props) {
         super(props);
         this.getWeatherGroup = this.getWeatherGroup.bind(this);
-        console.log('this.props', this.rpops.weatherList);
     }
 
     getWeatherGroup(code) {
@@ -29,17 +28,13 @@ export default class ForecastDisplayList extends React.Component {
     }
 
 
-    
-
     render() {
         return (
         	<li>
-                          <div className="forecast-date">forecast-date</div>
-                          <div className="forecast-week-day">forecast-date</div>
-                          <img className="forecast-image" src={`images/w-${this.getWeatherGroup(this.props.weatherList.weather[0].id)}.png`}/>
-                          {/*<h2>{this.props.weather[0].id}</h2>*/}
-                          <p className="max-temp">max-temp</p>
-                          <p className="min-temp">min-temp</p>
+                          <div className="forecast-date">{this.props.time}</div>
+                          <img className="forecast-image" src={`images/w-${this.getWeatherGroup(this.props.weatherCode)}.png`} />
+                          <p className="temp-max">{this.props.temp_max}</p>
+                          <p className="temp-min">{this.props.temp_min}</p>
             </li>  
         );
     }

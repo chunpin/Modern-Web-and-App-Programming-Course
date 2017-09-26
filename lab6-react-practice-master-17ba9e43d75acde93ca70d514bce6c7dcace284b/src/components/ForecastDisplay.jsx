@@ -16,25 +16,27 @@ export default class ForecastDisplay extends React.Component {
 
     constructor(props) {
         super(props);
-        this.populateHtml = this.populateHtml.bind(this);
-        console.log('ForecastDisplay Coponent', this.props.weather_list);
+        this.state = {
+            weather_list:[],
+        }
     }
 
    
    componentWillReceiveProps(nextProps){
         console.log('componentWillReceiveProps');
         console.log('this.props', this.props.weather_list);
-        this.populateHtml(this.props.weather_list);
+        // put this,props.weather_list into state when succussfully reicev the data
+        if(this.props.weather_list){
+            this.setState({
+                weather_list:this.props.weather_list
+            })    
+        }
+        
+
    }
 
-    populateHtml(data = this.props.weather_list){
-            if(data){
-                data.map(function (item){
-                    return <ForecastDisplayList weatherList={item} />;
-                });
-            }
-    }
-   
+
+                    
 
     
 
@@ -45,7 +47,17 @@ export default class ForecastDisplay extends React.Component {
                 : ''}`}>
  
                <ul>
-                   {this.populateHtml()}
+                   { this.state.weather_list.map(item=> 
+                    <ForecastDisplayList 
+                        key={item.dt}
+                        weatherCode={item.weather[0].id}
+                        time={item.dt_txt}
+                        temp_avg={item.main.temp}
+                        temp_max={item.main.temp_max}
+                        temp_min={item.main.temp_min} 
+                    />) 
+
+                    }
                </ul>
 
             </div>
