@@ -17,25 +17,22 @@ export default class ForecastDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.populateHtml = this.populateHtml.bind(this);
+        console.log('ForecastDisplay Coponent', this.props.weather_list);
     }
 
    
+   componentWillReceiveProps(nextProps){
+        console.log('componentWillReceiveProps');
+        console.log('this.props', this.props.weather_list);
+        this.populateHtml(this.props.weather_list);
+   }
 
-    populateHtml(){
-        if(this.props.weather_list){
-            const data = this.props.weather_list;
-            const html = data.map(function (item){
-                console.log(item);
-                return <ForecastDisplayList weatherList = {item} />;
-            });
-
-            return html;
-
-
-        } else {
-            return 'data is not there just yet.';
-        }
-       
+    populateHtml(data = this.props.weather_list){
+            if(data){
+                data.map(function (item){
+                    return <ForecastDisplayList weatherList={item} />;
+                });
+            }
     }
    
 
