@@ -30,12 +30,14 @@ export default class ForecastDisplayList extends React.Component {
 
     render() {
         return (
-        	<li>
+        
+        	            <li>
                           <div className="forecast-date">{this.props.time}</div>
                           <img className="forecast-image" src={`images/w-${this.getWeatherGroup(this.props.weatherCode)}.png`} />
                           <p className="temp-max">{this.props.temp_max}</p>
                           <p className="temp-min">{this.props.temp_min}</p>
-            </li>  
+                        </li> 
+                
         );
     }
 }
