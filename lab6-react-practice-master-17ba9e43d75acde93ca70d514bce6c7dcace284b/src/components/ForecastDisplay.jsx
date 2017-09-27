@@ -99,9 +99,8 @@ export default class ForecastDisplay extends React.Component {
                
 
 
-     
+                <ul>
                    { this.state.weather_list.map(item=> 
-                                   { (item.dt_txt.split(' ')[1] === '00:00:00' ) ? '<ul>': '' }
                         <ForecastDisplayList 
                             key={item.dt}
                             weatherCode={item.weather[0].id}
@@ -110,8 +109,8 @@ export default class ForecastDisplay extends React.Component {
                             temp_max={item.main.temp_max}
                             temp_min={item.main.temp_min} 
                         />) 
-                       { (item.dt_txt.split(' ')[1] === '21:00:00' ) ? '</ul>': '' } 
                     }
+                </ul>
                
 
             </div>
