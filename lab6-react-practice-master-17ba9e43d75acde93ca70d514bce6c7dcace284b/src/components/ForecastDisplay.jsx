@@ -16,24 +16,69 @@ export default class ForecastDisplay extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             weather_list:[],
+            week_day:this.getWeekDayOfToday(),
+
         }
+
+        this.getNearestTime = this.getNearestTime.bind(this);
     }
 
-   
-   componentWillReceiveProps(nextProps){
-        console.log('componentWillReceiveProps');
-        console.log('this.props', this.props.weather_list);
-        // put this,props.weather_list into state when succussfully reicev the data
-        if(this.props.weather_list){
-            this.setState({
-                weather_list:this.props.weather_list
-            })    
-        }
-        
 
-   }
+    getNearestTime(date){
+        const dateAndTime = date.split(' ');
+        const time = dateAndTime[1];
+        return time;
+    }
+
+
+    getWeekDayOfToday(){
+        const today = new Date();
+        const weekday = today.getDay();
+        switch(weekday){
+            case 0:
+                return 'Sunday';
+                break;
+            case 1:
+                return 'Monday';
+                break;
+            case 2:
+                return 'Tuesday';
+                break;
+            case 3:
+                return 'Wednesday';
+                break;
+            case 4:
+                return 'Thursday';
+                break;
+            case 5:
+                return 'Friday';
+                break;
+            case 6:
+                return 'Saturday';
+                break;
+            default:
+                return new Date();
+        }
+
+       
+    }
+   
+    componentWillReceiveProps(nextProps){
+         console.log('componentWillReceiveProps');
+         console.log('this.props', this.props.weather_list);
+         // put this,props.weather_list into state when succussfully reicev the data
+         if(this.props.weather_list){
+             this.setState({
+                 weather_list:this.props.weather_list,
+                 nearest_time:this.getNearestTime(this.props.weather_list[0].dt_txt),
+             })    
+         }
+         
+ 
+    }
 
 
                     
@@ -42,21 +87,28 @@ export default class ForecastDisplay extends React.Component {
 
     render() {
         return (
-            <div className={`weather-display ${this.props.masking
+            <div className={`weather-card weather-display ${this.props.masking
                 ? 'masking'
                 : ''}`}>
- 
+                
+               <h2 className="location">{this.props.city}</h2>
+               <div className="date-wrapper">
+                    <h2 className="date-weekday">{this.state.week_day} </h2>
+                    <h2 className="date-time">{this.state.nearest_time}</h2>
+               </div>
+               
+
+
                <ul>
                    { this.state.weather_list.map(item=> 
-                    <ForecastDisplayList 
-                        key={item.dt}
-                        weatherCode={item.weather[0].id}
-                        time={item.dt_txt}
-                        temp_avg={item.main.temp}
-                        temp_max={item.main.temp_max}
-                        temp_min={item.main.temp_min} 
-                    />) 
-
+                        <ForecastDisplayList 
+                            key={item.dt}
+                            weatherCode={item.weather[0].id}
+                            time={item.dt_txt}
+                            temp_avg={item.main.temp}
+                            temp_max={item.main.temp_max}
+                            temp_min={item.main.temp_min} 
+                        />) 
                     }
                </ul>
 
