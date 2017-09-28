@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import ForecastDisplayList from 'components/ForecastDisplayList.jsx';
 
+import { Table } from 'reactstrap';
 
-import './WeatherDisplay.css';
+
+import './ForecaseDisplay.css';
 
 export default class ForecastDisplay extends React.Component {
     static propTypes = {
@@ -65,6 +67,9 @@ export default class ForecastDisplay extends React.Component {
 
        
     }
+
+
+   
    
     componentWillReceiveProps(nextProps){
          console.log('componentWillReceiveProps');
@@ -98,22 +103,34 @@ export default class ForecastDisplay extends React.Component {
                </div>
                
 
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                        </tr>
+                    </thead>
+                       { this.state.weather_list.map(item=> 
+                          
+                                <ForecastDisplayList 
+                                    key={item.dt}
+                                    weatherCode={item.weather[0].id}
+                                    time={item.dt_txt}
+                                    temp_avg={item.main.temp}
+                                    temp_max={item.main.temp_max}
+                                    temp_min={item.main.temp_min} 
+                                />
+                            ) 
+                        }
+                </Table>
 
-                <ul>
-                   { this.state.weather_list.map(item=> 
-                        <ForecastDisplayList 
-                            key={item.dt}
-                            weatherCode={item.weather[0].id}
-                            time={item.dt_txt}
-                            temp_avg={item.main.temp}
-                            temp_max={item.main.temp_max}
-                            temp_min={item.main.temp_min} 
-                        />) 
-                    }
-                </ul>
                
 
             </div>
         );
     }
 }
+
+{/* this.getTime(item.dt_txt) === '00:00:00' ? <span>divider</span> : '' */}

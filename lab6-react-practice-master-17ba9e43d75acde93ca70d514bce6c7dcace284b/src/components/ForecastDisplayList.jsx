@@ -27,16 +27,40 @@ export default class ForecastDisplayList extends React.Component {
         return group;
     }
 
+    getTime (data){
+        const time = data.split(' ')[1];
+        return time;
+
+    }
+
+
 
     render() {
         return (
         
-        	            <li>
-                          <div className="forecast-date">{this.props.time}</div>
-                          <img className="forecast-image" src={`images/w-${this.getWeatherGroup(this.props.weatherCode)}.png`} />
-                          <p className="temp-max">{this.props.temp_max}</p>
-                          <p className="temp-min">{this.props.temp_min}</p>
-                        </li> 
+        	           <tbody>
+
+        	            	{  this.getTime(this.props.time) === '00:00:00' ? 
+        	            		 <tr>
+        	            		 	<th className="forecast-date">{this.props.time}</th>
+	        	            		<td>
+			                        <img className="forecast-image" src={`images/w-${this.getWeatherGroup(this.props.weatherCode)}.png`} />
+			                        </td>
+			                        <td className="temp-max"></td>
+			                        <td className="temp-min"></td>
+                        	     </tr> 
+        	            		:
+        	            		 <tr>
+        	            		 	<th className="forecast-date">{this.props.time}</th>
+	        	            		<td>
+			                        <img className="forecast-image" src={`images/w-${this.getWeatherGroup(this.props.weatherCode)}.png`} />
+			                        </td>
+			                        <td className="temp-max">{this.props.temp_max}</td>
+			                        <td className="temp-min">{this.props.temp_min}</td>
+                        	     </tr> 
+        	            	}
+        	            </tbody>
+                       
                 
         );
     }
