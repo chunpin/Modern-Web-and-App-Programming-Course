@@ -112,18 +112,24 @@ export default class ForecastDisplay extends React.Component {
                             <th>Username</th>
                         </tr>
                     </thead>
+                     <tbody>
                        { this.state.weather_list.map(item=> 
-                          
-                                <ForecastDisplayList 
-                                    key={item.dt}
-                                    weatherCode={item.weather[0].id}
-                                    time={item.dt_txt}
-                                    temp_avg={item.main.temp}
-                                    temp_max={item.main.temp_max}
-                                    temp_min={item.main.temp_min} 
-                                />
+                             // if item.dt_txt === '00:00:00' , insert one empty <tr> ,
+                             // else rendering ForecastDisplayList component as usuall while passing the props into it.
+                               true? 'hi': 'nothing'
+                        
+                                // <ForecastDisplayList 
+                                //     key={item.dt}
+                                //     weatherCode={item.weather[0].id}
+                                //     time={item.dt_txt}
+                                //     temp_avg={item.main.temp}
+                                //     temp_max={item.main.temp_max}
+                                //     temp_min={item.main.temp_min} 
+                                // />
+                    
                             ) 
                         }
+                         </tbody>
                 </Table>
 
                
