@@ -92,7 +92,7 @@ export default class ForecastDisplay extends React.Component {
 
     render() {
         return (
-            <div className={`weather-card weather-display ${this.props.masking
+            <div className={`weather-card weather-display forecast-display ${this.props.masking
                 ? 'masking'
                 : ''}`}>
                 
@@ -106,27 +106,32 @@ export default class ForecastDisplay extends React.Component {
                 <Table>
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Username</th>
+                            <th>TIME</th>
+                            <th>TEMP</th>
+                            <th>WIND</th>
+                            <th></th>
                         </tr>
                     </thead>
                      <tbody>
-                       { this.state.weather_list.map(item=> 
+                       { this.state.weather_list.map((item,index)=> 
                              // if item.dt_txt === '00:00:00' , insert one empty <tr> ,
                              // else rendering ForecastDisplayList component as usuall while passing the props into it.
-                               true? 'hi': 'nothing'
+                               item.dt_txt.split(' ')[1] === '00:00:00'? 
+
+                                <ForecastDisplayList />
+                               : 
                         
-                                // <ForecastDisplayList 
-                                //     key={item.dt}
-                                //     weatherCode={item.weather[0].id}
-                                //     time={item.dt_txt}
-                                //     temp_avg={item.main.temp}
-                                //     temp_max={item.main.temp_max}
-                                //     temp_min={item.main.temp_min} 
-                                // />
-                    
+                                <ForecastDisplayList 
+                                    key={item.dt}
+                                    index={index}
+                                    weatherCode={item.weather[0].id}
+                                    time={item.dt_txt}
+                                    temp_avg={item.main.temp}
+                                    temp_max={item.main.temp_max}
+                                    temp_min={item.main.temp_min} 
+                                    wind={item.wind.speed}
+                                />
+
                             ) 
                         }
                          </tbody>
