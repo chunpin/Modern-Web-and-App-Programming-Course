@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './ForecastDisplayList.css';
+
 export default class ForecastDisplayList extends React.Component {
    
     constructor(props) {
@@ -33,23 +35,45 @@ export default class ForecastDisplayList extends React.Component {
 
     }
 
+    getWeekDay(dateAndTime, index){
+        const html ='';
+        const date = dateAndTime.split(' ')[0];
+
+        if(index < 8){
+            html = '<div>hi<div>';
+        } else {
+            html = '<div>no hi</div>';
+        }
+
+        return html;
+    }
+
 
 
     render() {
         return (
-                <tr>
+                <div className="forecast-list-wrapper">
+
                      {this.props.index === 0 ? 
-                        <th className="forecast-date">NOW</th>
+                        <div className="forecast-date">NOW</div>
                         :
-                        <th className="forecast-date">{this.props.time}</th>
+                        <div className="forecast-date">{this.props.time}</div>
                      }
-    	        	 <td>
+
     			     <img className="forecast-image" src={`images/w-${this.getWeatherGroup(this.props.weatherCode)}.png`} />
-    			     </td>
-    			     <td className="temp-max">{this.props.temp_max}</td>
-    			     <td className="temp-min">{this.props.temp_min}</td>
-                     <tr></tr>
-                </tr>
+    			     <div className="temp-max">{this.props.temp_max}</div>
+    			     <div className="temp-min">{this.props.temp_min}</div>
+
+                     {this.props.time.split(' ')[1] === '21:00:00' ? 
+                     //<div className="divider">tomorrow</div>
+
+                     // now we want to print out 'tomorrow' or 'date' depending on the index and time
+                     // by passing the props into getWeeDay function, and return html back to here.
+                        this.getWeekDay()
+                     : 
+                     '' 
+                     } 
+                </div>
         );
     }
 }

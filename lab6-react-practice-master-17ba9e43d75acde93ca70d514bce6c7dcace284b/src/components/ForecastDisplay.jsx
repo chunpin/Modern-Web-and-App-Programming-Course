@@ -6,7 +6,7 @@ import ForecastDisplayList from 'components/ForecastDisplayList.jsx';
 import { Table } from 'reactstrap';
 
 
-import './ForecaseDisplay.css';
+import './ForecastDisplay.css';
 
 export default class ForecastDisplay extends React.Component {
     static propTypes = {
@@ -103,24 +103,18 @@ export default class ForecastDisplay extends React.Component {
                </div>
                
 
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>TIME</th>
-                            <th>TEMP</th>
-                            <th>WIND</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                     <tbody>
-                       { this.state.weather_list.map((item,index)=> 
-                             // if item.dt_txt === '00:00:00' , insert one empty <tr> ,
-                             // else rendering ForecastDisplayList component as usuall while passing the props into it.
-                               item.dt_txt.split(' ')[1] === '00:00:00'? 
+              
+                    <div className="forecast-title-wrapper">
 
-                                <ForecastDisplayList />
-                               : 
-                        
+                            <div className="forecast-title-time">TIME</div>
+                            <div className="forecast-title-temp">TEMP</div>
+                            <div className="forecast-title-image">IMAGE</div>
+                            <div className="forecast-title-wind">WIND</div>
+
+                    </div>
+                    
+                    <div className="forecast-display-list-wrapper">
+                       { this.state.weather_list.map((item,index)=> 
                                 <ForecastDisplayList 
                                     key={item.dt}
                                     index={index}
@@ -131,11 +125,11 @@ export default class ForecastDisplay extends React.Component {
                                     temp_min={item.main.temp_min} 
                                     wind={item.wind.speed}
                                 />
-
                             ) 
                         }
-                         </tbody>
-                </Table>
+                    </div>
+                       
+
 
                
 
@@ -143,5 +137,3 @@ export default class ForecastDisplay extends React.Component {
         );
     }
 }
-
-{/* this.getTime(item.dt_txt) === '00:00:00' ? <span>divider</span> : '' */}

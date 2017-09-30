@@ -1,0 +1,35 @@
+.forecast-list-wrapper{
+	display:flex;
+	flex-direction:row;
+	flex-wrap:wrap;
+	border-bottom:1px solid white;
+	justify-content: center;
+	align-items: center ;
+	width: 95%;
+    margin: auto;
+}
+
+.forecast-date,
+.forecast-image,
+.temp-max,
+.temp-min {
+	width:25%;
+
+}
+
+.forecast-image{
+	width:25% !important;
+	height:auto !important;
+	margin:auto !important;
+}
+
+
+.forecast-list-wrapper .divider{
+	display: flex;
+	justify-content:flex-start; 
+	align-items: center;
+	width: 100%;
+	height:50px;
+	border-top: 1px solid white;
+
+}

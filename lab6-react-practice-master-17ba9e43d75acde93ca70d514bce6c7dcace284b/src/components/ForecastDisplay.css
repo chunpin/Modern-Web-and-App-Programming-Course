@@ -1,0 +1,29 @@
+.forecast-title-wrapper{
+	display: flex;
+	flex-direction: row;
+	flex-wrap :wrap;
+}
+
+
+.forecast-title-time,
+.forecast-title-temp,
+.forecast-title-image,
+.forecast-title-wind  {
+	width:25%;
+}
+
+
+
+
+.forecast-display-list-wrapper{
+	height:70%;
+	overflow: scroll;
+	border:1px solid white;
+}
+
+
+
+
+
+
+
