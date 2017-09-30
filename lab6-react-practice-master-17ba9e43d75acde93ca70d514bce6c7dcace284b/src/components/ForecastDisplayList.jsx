@@ -32,20 +32,27 @@ export default class ForecastDisplayList extends React.Component {
     getTime (data){
         const time = data.split(' ')[1];
         return time;
+    }
 
+    getDate (data){
+        const date = data.split(' ')[0];
+        return date;
     }
 
     getWeekDay(dateAndTime, index){
-        const html ='';
-        const date = dateAndTime.split(' ')[0];
+        console.log('index', index);
+        const date = this.getDate(dateAndTime);
+        const time = this.getTime(dateAndTime);
 
-        if(index < 8){
-            html = '<div>hi<div>';
+        if(index < 8 ){
+            const html = <div className="divider">TOMORROW</div>
+            return html;
         } else {
-            html = '<div>no hi</div>';
+            const html = <div className="divider">{date}</div>;
+            return html;
         }
 
-        return html;
+       
     }
 
 
@@ -57,7 +64,7 @@ export default class ForecastDisplayList extends React.Component {
                      {this.props.index === 0 ? 
                         <div className="forecast-date">NOW</div>
                         :
-                        <div className="forecast-date">{this.props.time}</div>
+                        <div className="forecast-date">{this.getTime(this.props.time)}</div>
                      }
 
     			     <img className="forecast-image" src={`images/w-${this.getWeatherGroup(this.props.weatherCode)}.png`} />
@@ -69,7 +76,7 @@ export default class ForecastDisplayList extends React.Component {
 
                      // now we want to print out 'tomorrow' or 'date' depending on the index and time
                      // by passing the props into getWeeDay function, and return html back to here.
-                        this.getWeekDay()
+                        this.getWeekDay(this.props.time, this.props.index)
                      : 
                      '' 
                      } 
