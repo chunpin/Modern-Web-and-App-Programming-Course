@@ -77,6 +77,7 @@ export default class ForecastDisplayList extends React.Component {
                      // now we want to print out 'tomorrow' or 'date' depending on the index and time
                      // by passing the props into getWeeDay function, and return html back to here.
                         this.getWeekDay(this.props.time, this.props.index)
+
                      : 
                      '' 
                      } 
