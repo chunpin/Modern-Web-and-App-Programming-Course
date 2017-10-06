@@ -29,8 +29,29 @@ export default class ForecastDisplayList extends React.Component {
         return group;
     }
 
-    getTime (data){
+    getTimeInAmOrPm(data){
         const time = data.split(' ')[1];
+        const numberOfHour = parseInt(time,10); // 00:00:00
+        let timeOutPut ='';
+
+        if(numberOfHour === 0 ){
+            timeOutPut =  12 + ' AM';
+            return timeOutPut;
+        } else if(numberOfHour > 0 &&  numberOfHour < 12 ){
+            timeOutPut = '0' + numberOfHour + ' AM';
+            return timeOutPut;
+        } else if(numberOfHour === 12 ) {
+            timeOutPut = numberOfHour   + ' PM';
+            return timeOutPut;
+        } else {
+            timeOutPut = numberOfHour - 12  + ' PM';
+            return timeOutPut;
+        }
+    } 
+
+
+    getTime (data){
+        const time = data.split(' ')[1]; //21:00:00
         return time;
     }
 
@@ -64,7 +85,7 @@ export default class ForecastDisplayList extends React.Component {
                      {this.props.index === 0 ? 
                         <div className="forecast-date">NOW</div>
                         :
-                        <div className="forecast-date">{this.getTime(this.props.time)}</div>
+                        <div className="forecast-date">{this.getTimeInAmOrPm(this.props.time)}</div>
                      }
 
     			     <img className="forecast-image" src={`images/w-${this.getWeatherGroup(this.props.weatherCode)}.png`} />
@@ -72,7 +93,6 @@ export default class ForecastDisplayList extends React.Component {
     			     <div className="temp-min">{this.props.temp_min}</div>
 
                      {this.props.time.split(' ')[1] === '21:00:00' ? 
-                     //<div className="divider">tomorrow</div>
 
                      // now we want to print out 'tomorrow' or 'date' depending on the index and time
                      // by passing the props into getWeeDay function, and return html back to here.
