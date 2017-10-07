@@ -51,34 +51,12 @@ export default class ForecastDisplayList extends React.Component {
 
 
     // prettyPrintAmOrPm(dateString){ 
-    //  const time = dateString.split(' ')[1];
-    //  const numberOfHour = parseInt(time,10); // 00:00:00
-
-    //  var units = [
-    //     {hour: 12 * 0 , label: 'AM'},
-    //     {hour: 12 * 1, label: 'PM'},
-    //     {hour: 12 * 2 , label: 'PM'},
-    //  ]
-
-    //  var unit,
-    //      len,
-    //      result,
-    //      label;
-
-
-    //  for (var i = 0 , len = units.length ; i < len ; i++){
-    //     unit = units[i];
-
-    //     if(numberOfHour >= unit.hour ) {
-    //         result =  numberOfHour - unit.hour;
-    //         label = unit.label;
-    //     }
-    //  }
-
-
-    //  return result + ' ' + label;
-
-
+    //      const time = dateString.split(' ')[1];
+    //      const numberOfHour = parseInt(time,10); // 00:00:00
+    //      const label = numberOfHour >= 12 ? 'PM' : 'AM';
+    //      let result =  numberOfHour % 12;
+    //      result = result ? result= '0' + result : 12;
+    //      return result + ' ' + label ;
     // }
 
 
